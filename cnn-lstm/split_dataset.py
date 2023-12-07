@@ -7,7 +7,7 @@ class SplitDataset:
     THIS_FILE_PATH = os.path.abspath(__file__)
     PARENT_DIRECTORY = os.path.abspath(os.path.join(THIS_FILE_PATH, ".."))
 
-    DATASET_PATH = os.path.join(PARENT_DIRECTORY, 'dataset') #PATH LOCATION DATASET FOLDER
+    DATASET_PATH = os.path.join(PARENT_DIRECTORY, 'dataset/extract-images') #PATH LOCATION DATASET FOLDER
     TO_FOLDER = os.path.join(PARENT_DIRECTORY, 'split-dataset') #PATH LOCATION CREATE SPLIT DATASET FOLDER   
 
     def __init__(self):
@@ -22,17 +22,16 @@ class SplitDataset:
             dev_path   = os.path.join(self.TO_FOLDER, 'dev', subFolder)
 
             subFolderPath = os.path.join(self.DATASET_PATH,subFolder)
+            
+            folder = os.listdir(subFolderPath)
 
-            for folder in os.listdir(subFolderPath):
-
-                folderPath = os.path.join(subFolderPath,folder)
-
-                trainDataFiles, testDataFiles = train_test_split(os.listdir(folderPath), test_size=0.3)
-                testDataFiles , devDataFiles  = train_test_split(testDataFiles, test_size=0.35)
-
-                self.move_file_dataset(trainDataFiles, folderPath, train_path)
-                self.move_file_dataset(testDataFiles, folderPath, test_path)
-                self.move_file_dataset(devDataFiles, folderPath, dev_path)
+            trainDataFolder, testDataFolder = train_test_split(folder, test_size=0.5)
+            testDataFolder , devDataFolder  = train_test_split(testDataFolder, test_size=0.35)
+            
+            #move to folder split dataset
+            self.move_folder_dataset(trainDataFolder, subFolderPath, train_path)
+            self.move_folder_dataset(testDataFolder, subFolderPath, test_path)
+            self.move_folder_dataset(devDataFolder, subFolderPath, dev_path)
 
     def move_file_dataset(self, files, sourcePath, toFolder):
 
@@ -44,3 +43,13 @@ class SplitDataset:
             toFolderPath   = os.path.join(toFolder,file)
 
             shutil.copy(sourceFilePath,toFolderPath)
+
+    def move_folder_dataset(self, folders, sourcePath, toFolder):
+        if not os.path.exists(toFolder):
+            os.makedirs(toFolder)
+        
+        for folder in folders:
+            sourceFilePath = os.path.join(sourcePath,folder)
+            toFolderPath   = os.path.join(toFolder,folder)
+
+            shutil.copytree(sourceFilePath,toFolderPath)
