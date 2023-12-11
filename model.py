@@ -11,7 +11,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 class Model:
     #PARENT DIRECTORY
     PARENT_DIRECTORY = os.getcwd()
-    DATASET_PATH = os.path.join(PARENT_DIRECTORY,'cnn-lstm' , 'split-dataset')
+    DATASET_PATH = os.path.join(PARENT_DIRECTORY,'cnn-lstm', 'split-dataset')
 
     #TRAIN - TEST - DEV [DATASET_PATH]
     TRAIN_DATASET = os.path.join(DATASET_PATH ,'train')
