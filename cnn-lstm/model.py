@@ -8,7 +8,7 @@ from PIL import ImageFile
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-class model_cnn:
+class model:
     #PARENT DIRECTORY
     PARENT_DIRECTORY = os.getcwd()
     DATASET_PATH = os.path.join(PARENT_DIRECTORY,'cnn-lstm' , 'split-dataset')
@@ -103,4 +103,4 @@ class model_cnn:
 
         return model
 
-model_cnn()
+model()
