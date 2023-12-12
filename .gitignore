@@ -1,8 +1,8 @@
 __pycache__
+.idea
 dataset
 split-dataset
-extracted-image
-file_error.txt
-model_plot.png
-model_plot2.png
+plot-model-images
 new-dataset
+model-dataset
+error-logs
