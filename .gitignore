@@ -5,4 +5,5 @@ split-dataset
 plot-model-images
 new-dataset
 model-dataset
+augmentation-dataset
 error-logs
