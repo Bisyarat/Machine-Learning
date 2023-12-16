@@ -40,15 +40,17 @@ class GenerateAugDataset:
                     if not os.path.exists(folder_augmentation_path):
                         os.makedirs(folder_augmentation_path)
 
+                    num = 1
                     for i, img in enumerate(images):
                         # Memperluas dimensi karena `flow` mengharapkan tensor 4D
                         img = np.expand_dims(img, axis=0)
 
                         # Membuat iterator untuk augmentasi
-                        aug_iter = datagen.flow(img, save_to_dir=folder_augmentation_path, save_prefix=f"{class_folder}_aug_{i}", save_format='jpg')
+                        aug_iter = datagen.flow(img, save_to_dir=folder_augmentation_path, save_prefix=f"{class_folder}_aug_{num}", save_format='jpg')
 
                         # Melakukan augmentasi sebanyak 2 kali
                         next(aug_iter)
+                        num += 1
                     print('{} sudah berhasil di augmentasi'.format(folder))
 
     def create_datagen(self):

@@ -1,9 +1,5 @@
 __pycache__
 .idea
-dataset
-split-dataset
-plot-model-images
-new-dataset
-model-dataset
-augmentation-dataset
-error-logs
+Dataset
+Plot_Model_Images
+Error_Logs

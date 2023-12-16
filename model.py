@@ -1,6 +1,6 @@
 import tensorflow as tf
 import os
-from custom_callbacks import CustomCallback
+from CustomCallbacks import CustomCallback
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D
@@ -11,15 +11,10 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 class Model:
     #PARENT DIRECTORY
     PARENT_DIRECTORY = os.getcwd()
-    DATASET_PATH = os.path.join(PARENT_DIRECTORY,'cnn-lstm', 'split-dataset')
+    DATASET_PATH = 'Dataset'
 
-    #TRAIN - TEST - DEV [DATASET_PATH]
-    TRAIN_DATASET = os.path.join(DATASET_PATH ,'train')
-    TEST_DATASET  = os.path.join(DATASET_PATH ,'test')
-    DEV_DATASET   = os.path.join(DATASET_PATH ,'dev')
-    
     #Create Labeling Data
-    CLASS_LABELS = sorted(os.listdir(TRAIN_DATASET))
+    CLASS_LABELS = sorted(os.listdir(DATASET_PATH))
     LABELS_COUNT = len(CLASS_LABELS)
     
     def __init__(self):
@@ -28,12 +23,12 @@ class Model:
         BATCH_SIZE = 32
         TARGET_SIZE = (250,200)
 
-        #STEP VARIABLE
+        #STEPS VARIABLE
         STEPS_PER_EPOCH = 64
         VALIDATION_STEPS = 7
         
         #TARGET ACCURACY
-        TARGET_ACCURACY = 0.95
+        TARGET_ACCURACY = 0.83
         
         #IMAGE GENERATOR
         TRAIN_GEN_IMAGE , VALIDATION_GEN_IMAGE = self.image_generator(TARGET_SIZE , BATCH_SIZE)
@@ -50,7 +45,7 @@ class Model:
         callbacks=[CustomCallback(TARGET_ACCURACY)]
         )
 
-    def image_generator(self, target_size , batch_size):
+    def image_generator(self, target_size, batch_size):
         datagen_image = ImageDataGenerator(
                         rescale=1./255,
                         zoom_range=0.0,
@@ -58,7 +53,7 @@ class Model:
                         validation_split=0.2)
 
         train_gen_image = datagen_image.flow_from_directory(
-                        self.TRAIN_DATASET, 
+                        self.DATASET_PATH, 
                         target_size=target_size,
                         shuffle=True,
                         batch_size=batch_size,
@@ -67,7 +62,7 @@ class Model:
                         subset='training',)
 
         val_gen_image = datagen_image.flow_from_directory(
-                        self.TEST_DATASET, 
+                        self.DATASET_PATH, 
                         target_size=target_size,
                         batch_size=batch_size,
                         color_mode='rgb',
